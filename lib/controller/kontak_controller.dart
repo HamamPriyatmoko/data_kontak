@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:data_kontak/model/kontak.dart';
+import 'package:data_kontak/model/person.dart';
 import 'package:data_kontak/service/kontak_service.dart';
 
 class KontakController {
-  final kontakService = KontakService();
+  final KontakService kontakService = KontakService();
 
   Future<Map<String, dynamic>> addPerson(Kontak person, File? file) async {
     Map<String, String> data = {
@@ -39,15 +40,18 @@ class KontakController {
         };
       }
     } catch (e) {
-      return {"success": false, "message": 'Terjadi kesalahan: $e'};
+      return {
+        "success": false,
+        "message": 'Terjadi kesalahan: $e',
+      };
     }
   }
 
-  Future<List<Kontak>> getPeople() async {
+  Future<List<Person>> getPeople() async {
     try {
       List<dynamic> peopleData = await kontakService.fetchPeople();
-      List<Kontak> people =
-          peopleData.map((json) => Kontak.fromMap(json)).toList();
+      List<Person> people =
+          peopleData.map((json) => Person.fromMap(json)).toList();
       return people;
     } catch (e) {
       print(e);

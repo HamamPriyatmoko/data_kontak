@@ -1,6 +1,8 @@
 import 'package:data_kontak/Screen/home_screen.dart';
 import 'package:data_kontak/controller/kontak_controller.dart';
+
 import 'package:data_kontak/model/kontak.dart';
+import 'package:data_kontak/model/person.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -25,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: Text('Daftar Orang'),
       ),
-      body: FutureBuilder<List<Kontak>>(
+      body: FutureBuilder<List<Person>>(
         future: _controller.getPeople(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -36,12 +38,12 @@ class _HomeViewState extends State<HomeView> {
             return ListView.builder(
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
-                Kontak person = snapshot.data![index];
+                Person person = snapshot.data![index];
                 return ListTile(
                   title: Text(person.nama),
                   subtitle: Text(person.email),
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(person.foto),
+                    backgroundImage: NetworkImage(person.gambar),
                   ),
                 );
               },
