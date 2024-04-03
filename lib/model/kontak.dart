@@ -27,4 +27,26 @@ class Kontak {
       foto: foto ?? this.foto,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'nama': nama});
+    result.addAll({'email': email});
+    result.addAll({'alamat': alamat});
+    result.addAll({'telepon': telepon});
+    result.addAll({'foto': foto});
+
+    return result;
+  }
+
+  factory Kontak.fromMap(Map<String, dynamic> map) {
+    return Kontak(
+      nama: map['nama'] ?? '',
+      email: map['email'] ?? '',
+      alamat: map['alamat'] ?? '',
+      telepon: map['telepon'] ?? '',
+      foto: map['foto'] ?? '',
+    );
+  }
 }
