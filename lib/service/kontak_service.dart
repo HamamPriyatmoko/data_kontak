@@ -10,7 +10,7 @@ class KontakService {
   Uri getUri(String path) {
     return Uri.parse("$baseUrl$path");
   }
-  
+
   Future<http.Response> addPerson(Map<String, String> data, File? file) async {
     var request = http.MultipartRequest(
       'POST',
@@ -42,5 +42,4 @@ class KontakService {
       throw Exception('Failed to load people: ${response.reasonPhrase}');
     }
   }
-   
 }
