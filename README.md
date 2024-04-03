@@ -2,7 +2,14 @@
 
 A new Flutter project.
 
-## Getting Started
+## Form Registrasi (Sebelum)
+![Screenshot_1712160748](https://github.com/HamamPriyatmoko/data_kontak/assets/115150198/dd62f57a-b5c1-4ac2-bfea-998d446f8359)
+
+## Form Registrasi (Sesudah)
+![Screenshot_1712160984](https://github.com/HamamPriyatmoko/data_kontak/assets/115150198/cd7d3244-7eec-4988-9cf8-d7b771976e81)
+
+## Home Screen
+![Screenshot_1712160667](https://github.com/HamamPriyatmoko/data_kontak/assets/115150198/c198a9c5-e4aa-4710-8136-77326ca25434)
 
 This project is a starting point for a Flutter application.
 
