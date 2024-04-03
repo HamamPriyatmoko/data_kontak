@@ -11,4 +11,20 @@ class Kontak {
     required this.alamat,
     required this.foto,
   });
+
+  Kontak copyWith({
+    String? nama,
+    String? email,
+    String? alamat,
+    String? telepon,
+    String? foto,
+  }) {
+    return Kontak(
+      nama: nama ?? this.nama,
+      email: email ?? this.email,
+      alamat: alamat ?? this.alamat,
+      telepon: telepon ?? this.telepon,
+      foto: foto ?? this.foto,
+    );
+  }
 }
