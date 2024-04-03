@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:data_kontak/controller/kontak_controller.dart';
+import 'package:data_kontak/model/kontak.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,11 +22,11 @@ class _FormKontakState extends State<FormKontak> {
   final _alamatController = TextEditingController();
   final _notelpController = TextEditingController();
 
-  Future<void> getImage() async{
-     final XFile? pickerFile =
+  Future<void> getImage() async {
+    final XFile? pickerFile =
         await _imagePicker.pickImage(source: ImageSource.gallery);
 
-        setState(
+    setState(
       () {
         if (pickerFile != null) {
           _image = File(pickerFile.path);
@@ -74,28 +76,42 @@ class _FormKontakState extends State<FormKontak> {
                 controller: _notelpController,
               ),
             ),
-            Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: SizedBox(
-              child: Text("No Image Selected"),
-            ),
-          ),
-          _image == null
-              ? const Text("Tidak ada data yang dipilih")
-              : Image.file(_image!),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () {
-                getImage();
-              },
-              child: const Text("Pilih Gambar"),
-            ),
-          ),
+            _image == null
+                ? const Text("Tidak ada data yang dipilih")
+                : Image.file(_image!),
             Container(
+              margin: const EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {},
-                child: Text("Submit"),
+                onPressed: () {
+                  getImage();
+                },
+                child: const Text("Pilih Gambar"),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    //Proses simpan data
+                    var result = await KontakController().addPerson(
+                        Kontak(
+                            nama: _namaController.text,
+                            email: _emailController.text,
+                            alamat: _alamatController.text,
+                            telepon: _notelpController.text,
+                            foto: _image!.path),
+                        _image);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(result['message']),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Simpan'),
               ),
             ),
           ],
