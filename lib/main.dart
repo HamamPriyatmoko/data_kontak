@@ -1,4 +1,5 @@
 import 'package:data_kontak/Screen/home_screen.dart';
+import 'package:data_kontak/Screen/home_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Center(child: Text("Kontak Form")),
         ),
-        body: const FormKontak(),
+        body: const HomeView(),
       ),
     );
   }
