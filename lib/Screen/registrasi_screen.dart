@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:data_kontak/Screen/home_screen.dart';
+import 'package:data_kontak/Screen/maps_screen.dart';
 import 'package:data_kontak/controller/kontak_controller.dart';
 import 'package:data_kontak/model/kontak.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,11 @@ class FormKontak extends StatefulWidget {
 class _FormKontakState extends State<FormKontak> {
   File? _image;
   final _imagePicker = ImagePicker();
+  String? _alamat;
 
   final _formKey = GlobalKey<FormState>();
   final _namaController = TextEditingController();
   final _emailController = TextEditingController();
-  final _alamatController = TextEditingController();
   final _notelpController = TextEditingController();
 
   final KontakController _personController = KontakController();
@@ -70,11 +71,52 @@ class _FormKontakState extends State<FormKontak> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Alamat", hintText: "Masukkan Alamat"),
-                  controller: _alamatController,
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Alamat"),
+                    _alamat == null
+                        ? const SizedBox(
+                            width: double.infinity,
+                            child: Text('Alamat kosong'))
+                        : Text('$_alamat'),
+                    _alamat == null
+                        ? TextButton(
+                            onPressed: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MapScreen(
+                                      onLocationSelected: (selectedAddress) {
+                                    setState(() {
+                                      _alamat = selectedAddress;
+                                    });
+                                  }),
+                                ),
+                              );
+                            },
+                            child: const Text('Pilih Alamat'),
+                          )
+                        : TextButton(
+                            onPressed: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MapScreen(
+                                      onLocationSelected: (selectedAddress) {
+                                    setState(() {
+                                      _alamat = selectedAddress;
+                                    });
+                                  }),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                            child: const Text('Ubah Alamat'),
+                          )
+                  ],
                 ),
               ),
               Container(
@@ -88,14 +130,11 @@ class _FormKontakState extends State<FormKontak> {
               _image == null
                   ? const Text("Tidak ada data yang dipilih")
                   : Image.file(_image!),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    getImage();
-                  },
-                  child: const Text("Pilih Gambar"),
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  getImage();
+                },
+                child: const Text("Pilih Gambar"),
               ),
               Container(
                 margin: const EdgeInsets.all(10),
@@ -107,7 +146,7 @@ class _FormKontakState extends State<FormKontak> {
                       Kontak _person = Kontak(
                         nama: _namaController.text,
                         email: _emailController.text,
-                        alamat: _alamatController.text,
+                        alamat: _alamat ?? '',
                         telepon: _notelpController.text,
                         foto: _image!.path,
                       );
